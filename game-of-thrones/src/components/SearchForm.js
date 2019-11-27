@@ -15,6 +15,7 @@ const TextIput = styled.input`
 
 const SearchForm = () => {
     const [characters, setCharacters] = useState([])
+    const [query, setQuery] = useState('');
 
     useEffect(() => {
         axios.get('https://www.anapioficeandfire.com/api/characters?page=2&pageSize=50')
@@ -22,15 +23,26 @@ const SearchForm = () => {
                 console.log(response.data)
                 const characterData = response.data;
 
-                setCharacters(characterData);
+                //search query filters --> name, gender culture
+                const result = characterData.filter(character => {
+                    return (
+                        character.name.toLowerCase().includes(query.toLowerCase()) ||
+                        character.gender.toLowerCase().includes(query.toLowerCase()) ||
+                        character.culture.toLowerCase().includes(query.toLowerCase())
+                    )
+                })
+                console.log(result);
+                setCharacters(result);
             })
             .catch(error => {
                 console.log('No game of thrones characters returned', error)
             })
-    }, [])
+    }, [query])
 
-
-
+    //add 'onInputChange' handler to watch for input changes
+    const handleInputChange = (event) => {
+        setQuery(event.target.value);
+    }
 
     return (
         <div>
@@ -39,6 +51,8 @@ const SearchForm = () => {
                     type='text'
                     name='search'
                     placeholder='Search by name, gender, culture'
+                    onChange={handleInputChange}
+                    value={query}
                 />
             </form>
             {characters.map((character, index) => (
