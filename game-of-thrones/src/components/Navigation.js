@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SearchForm from './SearchForm';
 import styled from 'styled-components';
 
 
@@ -29,20 +28,14 @@ const LinkStyle = styled(Link)`
     width: 100;
 `
 
-const SearchWrapper = styled.div`
-    width: 60%;
-`
 
 const Navigation = () => {
     return (
         <NavigationWrapper>
             <LinkWrapper>
                 <LinkStyle to='/Home'>Home</LinkStyle>
-                <LinkStyle to='/CharacterList'>Characters</LinkStyle>
+                <LinkStyle to='/Characters'>Characters</LinkStyle>
             </LinkWrapper>
-            <SearchWrapper>
-                <SearchForm />
-            </SearchWrapper>
         </NavigationWrapper>
     )
 }
