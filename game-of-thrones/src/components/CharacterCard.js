@@ -4,12 +4,13 @@ import axios from 'axios';
 
 const CardWrapper = styled.div`
     margin-top: 3%;
+    width: 50%;
 `
 
 const CardContainer = styled.div`
     border: 2px solid lightgrey;
     border-radius: 5px;
-    width: 50%;
+    width: 80%;
     padding: 3% 0;
     margin: auto;
 
@@ -32,8 +33,13 @@ const CharacterCard = (props) => {
         axios
             .get(props.character.father)
             .then(response => {
-                console.log(response.data.name)
-                setFatherName(response.data.name)
+                // console.log(response.data.name)
+                const fatherData = response.data.name;
+                console.log(fatherData)
+                const filteredFatherData = fatherData.filter(dad => dad !== "")
+
+                setFatherName(filteredFatherData)
+                // setFatherName(response.data.name)
             })
             .catch(error => {
                 console.log('No father name data returned', error)
@@ -52,7 +58,6 @@ const CharacterCard = (props) => {
                 console.log('No mother name data returned', error)
             })
     }, [props.character.mother])
-
 
 
     const { name, aliases, born, gender, playedBy, culture, titles } = props.character;

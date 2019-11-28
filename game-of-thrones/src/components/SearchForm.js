@@ -12,6 +12,36 @@ const TextIput = styled.input`
     padding: .5% 2%;
 `
 
+const Button = styled.button`
+  color: dodgerblue;
+  font-size: 1em;
+  width: 10%;
+  height: 45px;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid dodgerblue;
+  border-radius: 3px; 
+
+  &:hover {
+      background: dodgerblue;
+      color: #FFF;
+  } 
+`
+
+const NextButton = styled(Button)`
+    color: salmon;
+    border-color: salmon;
+
+    &:hover {
+        background: salmon;
+        columns: #FFF;
+    }
+`
+
+const GridDiv = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`
 
 const SearchForm = () => {
     const [characters, setCharacters] = useState([])
@@ -56,9 +86,15 @@ const SearchForm = () => {
                     value={query}
                 />
             </form>
-            {characters.map((character, index) => (
-                <CharacterCard key={index} character={character} />
-            ))}
+            <Button>Previous</Button>
+            <NextButton>Next</NextButton>
+            <GridDiv>
+                {characters.map((character, index) => (
+                    <CharacterCard key={index} character={character} />
+                ))}
+            </GridDiv>
+            <Button>Previous</Button>
+            <NextButton>Next</NextButton>
         </div>
     )
 }
