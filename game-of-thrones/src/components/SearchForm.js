@@ -15,7 +15,7 @@ const TextIput = styled.input`
 const Button = styled.button`
   color: dodgerblue;
   font-size: 1em;
-  width: 10%;
+  width: 20%;
   height: 45px;
   margin: 1em;
   padding: 0.25em 1em;
@@ -42,18 +42,13 @@ const FirstButton = styled(Button)`
     background: #000;
     color: #FFF;
     border: #000;
-
-    &:hover {
-        background: #FFF;
-        border: #000;
-    }
 `
 
-const LastButton = styled(Button)`
-    background: green;
-    color: #FFF;
-    border: green;
-`
+// const LastButton = styled(Button)`
+//     background: green;
+//     color: #FFF;
+//     border: green;
+// `
 
 const GridDiv = styled.div`
     display: flex;
@@ -62,6 +57,7 @@ const GridDiv = styled.div`
 
 const SearchForm = () => {
     const [characters, setCharacters] = useState([])
+    const [loading, setLoading] = useState(false);
     const [query, setQuery] = useState('');
     //Pagination setup --> starts at page 1 --> https://anapioficeandfire.com/Documentation#pagination
     const [page, setPage] = useState(1)
@@ -69,8 +65,10 @@ const SearchForm = () => {
     // 'https://www.anapioficeandfire.com/api/characters?page=2&pageSize=50'
 
     useEffect(() => {
+        setLoading(true);
         axios.get(`https://www.anapioficeandfire.com/api/characters?page=${page}&pageSize=50`)
             .then(response => {
+
                 console.log(response)
                 const characterData = response.data;
 
@@ -84,6 +82,7 @@ const SearchForm = () => {
                 })
                 console.log(result);
                 setCharacters(result);
+                setLoading(false);
             })
             .catch(error => {
                 console.log('No game of thrones characters returned', error)
@@ -95,6 +94,10 @@ const SearchForm = () => {
     //add 'onInputChange' handler to watch for input changes
     const handleInputChange = (event) => {
         setQuery(event.target.value);
+    }
+
+    if (loading) {
+        return <h2>Loading characters...</h2>
     }
 
     return (
@@ -111,16 +114,12 @@ const SearchForm = () => {
             <FirstButton onClick={() => setPage(page === 1)} >First</FirstButton>
             <Button onClick={() => setPage(page - 1)} >Previous</Button>
             <NextButton onClick={() => setPage(page + 1)} >Next</NextButton>
-            <LastButton>Last</LastButton>
+            {/* <LastButton>Last</LastButton> */}
             <GridDiv>
                 {characters.map((character, index) => (
                     <CharacterCard key={index} character={character} />
                 ))}
             </GridDiv>
-            <FirstButton>First</FirstButton>
-            <Button >Previous</Button>
-            <NextButton>Next</NextButton>
-            <LastButton>Last</LastButton>
         </div >
     )
 }
