@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const CardWrapper = styled.div`
     margin-top: 3%;
@@ -20,11 +21,41 @@ const CardContainer = styled.div`
 `
 
 
-
 const CharacterCard = (props) => {
-    console.log(props);
+    // console.log(props);
 
-    const { name, aliases, born, gender, playedBy, father, mother, culture, titles, } = props.character;
+    const [fatherName, setFatherName] = useState('');
+    const [motherName, setMotherName] = useState('');
+
+    //Father useEffect to get url father name
+    useEffect(() => {
+        axios
+            .get(props.character.father)
+            .then(response => {
+                console.log(response.data.name)
+                setFatherName(response.data.name)
+            })
+            .catch(error => {
+                console.log('No father name data returned', error)
+            })
+    }, [props.character.father])
+
+    //Father useEffect to get url mother name
+    useEffect(() => {
+        axios
+            .get(props.character.mother)
+            .then(response => {
+                console.log(response.data.name)
+                setMotherName(response.data.name)
+            })
+            .catch(error => {
+                console.log('No mother name data returned', error)
+            })
+    }, [props.character.mother])
+
+
+
+    const { name, aliases, born, gender, playedBy, culture, titles } = props.character;
     return (
         <CardWrapper>
             <CardContainer>
@@ -33,10 +64,12 @@ const CharacterCard = (props) => {
                     return <div key={alias}>{alias}</div>
                 })}</div>
                 <p>Born: {born}</p>
-                <p>Gende: {gender}</p>
+                <p>Gender: {gender}</p>
                 <p>Played by: {playedBy}</p>
-                <p>Father: {father}</p>
-                <p>Mother: {mother}</p>
+                {/* <p>Father: {father}</p> */}
+                <p>Father: {fatherName}</p>
+                <p>Mother: {motherName}</p>
+                {/* <div>Mother: {mother}</div> */}
                 <p>Culture: {culture}</p>
                 <div>Titles: {titles.map(title => {
                     return <div key={title}>{title}</div>

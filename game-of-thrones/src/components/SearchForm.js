@@ -39,6 +39,7 @@ const SearchForm = () => {
             })
     }, [query])
 
+
     //add 'onInputChange' handler to watch for input changes
     const handleInputChange = (event) => {
         setQuery(event.target.value);
