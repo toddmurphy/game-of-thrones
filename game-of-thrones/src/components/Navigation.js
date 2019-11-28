@@ -5,18 +5,14 @@ import styled from 'styled-components';
 
 const NavigationWrapper = styled.div`
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 1% 0;
     background: #000;
     color: #fff;
 `
 
 const LinkWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20%;
-    margin-right: 15%;
+    width: 20%;    
 `
 
 const LinkStyle = styled(Link)`

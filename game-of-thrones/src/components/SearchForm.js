@@ -20,7 +20,7 @@ const SearchForm = () => {
     useEffect(() => {
         axios.get('https://www.anapioficeandfire.com/api/characters?page=2&pageSize=50')
             .then(response => {
-                console.log(response.data)
+                console.log(response)
                 const characterData = response.data;
 
                 //search query filters --> name, gender culture

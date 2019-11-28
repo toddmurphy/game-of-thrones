@@ -2,14 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CardWrapper = styled.div`
-    border: 2px solid red;
     margin-top: 3%;
 `
 
 const CardContainer = styled.div`
     border: 2px solid lightgrey;
     border-radius: 5px;
-    width: 80%;
+    width: 50%;
     padding: 3% 0;
     margin: auto;
 
@@ -25,18 +24,23 @@ const CardContainer = styled.div`
 const CharacterCard = (props) => {
     console.log(props);
 
-    const { name, born, gender, playedBy, father, mother, culture, titles, } = props.character;
+    const { name, aliases, born, gender, playedBy, father, mother, culture, titles, } = props.character;
     return (
         <CardWrapper>
             <CardContainer>
                 <p>Name: {name}</p>
+                <div>Aliases: {aliases.map(alias => {
+                    return <div key={alias}>{alias}</div>
+                })}</div>
                 <p>Born: {born}</p>
                 <p>Gende: {gender}</p>
                 <p>Played by: {playedBy}</p>
                 <p>Father: {father}</p>
                 <p>Mother: {mother}</p>
                 <p>Culture: {culture}</p>
-                <p>Titles: {titles}</p>
+                <div>Titles: {titles.map(title => {
+                    return <div key={title}>{title}</div>
+                })}</div>
             </CardContainer>
         </CardWrapper>
     );
