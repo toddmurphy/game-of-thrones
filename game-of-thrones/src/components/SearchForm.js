@@ -38,6 +38,23 @@ const NextButton = styled(Button)`
     }
 `
 
+const FirstButton = styled(Button)`
+    background: #000;
+    color: #FFF;
+    border: #000;
+
+    &:hover {
+        background: #FFF;
+        border: #000;
+    }
+`
+
+const LastButton = styled(Button)`
+    background: green;
+    color: #FFF;
+    border: green;
+`
+
 const GridDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -46,9 +63,13 @@ const GridDiv = styled.div`
 const SearchForm = () => {
     const [characters, setCharacters] = useState([])
     const [query, setQuery] = useState('');
+    //Pagination setup --> starts at page 1 --> https://anapioficeandfire.com/Documentation#pagination
+    const [page, setPage] = useState(1)
+
+    // 'https://www.anapioficeandfire.com/api/characters?page=2&pageSize=50'
 
     useEffect(() => {
-        axios.get('https://www.anapioficeandfire.com/api/characters?page=2&pageSize=50')
+        axios.get(`https://www.anapioficeandfire.com/api/characters?page=${page}&pageSize=50`)
             .then(response => {
                 console.log(response)
                 const characterData = response.data;
@@ -67,7 +88,9 @@ const SearchForm = () => {
             .catch(error => {
                 console.log('No game of thrones characters returned', error)
             })
-    }, [query])
+
+        setPage(page - 1);
+    }, [query, page])
 
 
     //add 'onInputChange' handler to watch for input changes
@@ -86,16 +109,20 @@ const SearchForm = () => {
                     value={query}
                 />
             </form>
-            <Button>Previous</Button>
-            <NextButton>Next</NextButton>
+            <FirstButton onClick={() => setPage(page === 1)} >First</FirstButton>
+            <Button onClick={() => setPage(page - 1)} >Previous</Button>
+            <NextButton onClick={() => setPage(page + 1)} >Next</NextButton>
+            <LastButton>Last</LastButton>
             <GridDiv>
                 {characters.map((character, index) => (
                     <CharacterCard key={index} character={character} />
                 ))}
             </GridDiv>
-            <Button>Previous</Button>
+            <FirstButton>First</FirstButton>
+            <Button >Previous</Button>
             <NextButton>Next</NextButton>
-        </div>
+            <LastButton>Last</LastButton>
+        </div >
     )
 }
 
