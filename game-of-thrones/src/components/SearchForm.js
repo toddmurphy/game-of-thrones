@@ -87,9 +87,8 @@ const SearchForm = () => {
             })
             .catch(error => {
                 console.log('No game of thrones characters returned', error)
+                setPage(page - 1);
             })
-
-        setPage(page - 1);
     }, [query, page])
 
 
