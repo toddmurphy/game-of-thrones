@@ -62,9 +62,9 @@ const SearchForm = () => {
     //Pagination setup --> starts at page 1 --> https://anapioficeandfire.com/Documentation#pagination
     const [page, setPage] = useState(1)
 
-    // 'https://www.anapioficeandfire.com/api/characters?page=2&pageSize=50'
 
     useEffect(() => {
+        //sets initial loading state while waiting for response from api
         setLoading(true);
         axios.get(`https://www.anapioficeandfire.com/api/characters?page=${page}&pageSize=50`)
             .then(response => {
@@ -82,6 +82,7 @@ const SearchForm = () => {
                 })
                 console.log(result);
                 setCharacters(result);
+                //set loading back to false after data is loaded
                 setLoading(false);
             })
             .catch(error => {
@@ -96,9 +97,9 @@ const SearchForm = () => {
         setQuery(event.target.value);
     }
 
-    if (loading) {
-        return <h2>Loading characters...</h2>
-    }
+    // if (loading) {
+    //     return <h2>Loading characters...</h2>
+    // }
 
     return (
         <div>

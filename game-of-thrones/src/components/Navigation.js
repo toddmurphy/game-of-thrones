@@ -29,7 +29,7 @@ const Navigation = () => {
     return (
         <NavigationWrapper>
             <LinkWrapper>
-                <LinkStyle to='/Home'>Home</LinkStyle>
+                <LinkStyle to='/'>Home</LinkStyle>
                 <LinkStyle to='/Characters'>Characters</LinkStyle>
             </LinkWrapper>
         </NavigationWrapper>
