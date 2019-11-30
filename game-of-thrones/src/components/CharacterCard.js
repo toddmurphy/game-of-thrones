@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -61,7 +60,7 @@ const CharacterCard = (props) => {
     }, [props.character.mother])
 
 
-    const { name, aliases, born, gender, playedBy, culture, titles, url } = props.character;
+    const { name, aliases, born, gender, playedBy, culture, titles } = props.character;
     return (
         <CardWrapper>
             <CardContainer>

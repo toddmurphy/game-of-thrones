@@ -44,12 +44,6 @@ const FirstButton = styled(Button)`
     border: #000;
 `
 
-// const LastButton = styled(Button)`
-//     background: green;
-//     color: #FFF;
-//     border: green;
-// `
-
 const GridDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -57,19 +51,47 @@ const GridDiv = styled.div`
 
 const SearchForm = () => {
     const [characters, setCharacters] = useState([])
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [query, setQuery] = useState('');
     //Pagination setup --> starts at page 1 --> https://anapioficeandfire.com/Documentation#pagination
     const [page, setPage] = useState(1)
 
 
-    useEffect(() => {
-        //sets initial loading state while waiting for response from api
-        setLoading(true);
-        axios.get(`https://www.anapioficeandfire.com/api/characters?page=${page}&pageSize=50`)
-            .then(response => {
+    // useEffect(() => {
+    //     //sets initial loading state while waiting for response from api
+    //     // setLoading(true);
 
-                console.log(response)
+    //     axios.get(`https://www.anapioficeandfire.com/api/characters?page=${page}&pageSize=50`)
+    //         .then(response => {
+
+    //             console.log(response)
+    //             const characterData = response.data;
+
+    //             //search query filters --> name, gender culture
+    //             const result = characterData.filter(character => {
+    //                 return (
+    //                     character.name.toLowerCase().includes(query.toLowerCase()) ||
+    //                     character.gender.toLowerCase().includes(query.toLowerCase()) ||
+    //                     character.culture.toLowerCase().includes(query.toLowerCase())
+    //                 )
+    //             })
+    //             console.log(result);
+    //             setCharacters(result);
+    //             //set loading back to false after data is loaded
+    //             // setLoading(false);
+    //         })
+    //         .catch(error => {
+    //             console.log('No game of thrones characters returned', error)
+    //             setPage(page - 1);
+    //         })
+    // }, [query, page])
+
+
+    useEffect(() => {
+        const fetchCharacters = async () => {
+            try {
+                const response = await axios.get(`https://www.anapioficeandfire.com/api/characters?page=${page}&pageSize=50`)
+
                 const characterData = response.data;
 
                 //search query filters --> name, gender culture
@@ -82,15 +104,15 @@ const SearchForm = () => {
                 })
                 console.log(result);
                 setCharacters(result);
-                //set loading back to false after data is loaded
-                setLoading(false);
-            })
-            .catch(error => {
+            }
+            catch (error) {
                 console.log('No game of thrones characters returned', error)
                 setPage(page - 1);
-            })
-    }, [query, page])
+            }
+        }
 
+        fetchCharacters();
+    }, [query, page])
 
     //add 'onInputChange' handler to watch for input changes
     const handleInputChange = (event) => {
@@ -115,7 +137,6 @@ const SearchForm = () => {
             <FirstButton onClick={() => setPage(page === 1)} >First</FirstButton>
             <Button onClick={() => setPage(page - 1)} >Previous</Button>
             <NextButton onClick={() => setPage(page + 1)} >Next</NextButton>
-            {/* <LastButton>Last</LastButton> */}
             <GridDiv>
                 {characters.map((character, index) => (
                     <CharacterCard key={index} character={character} />
